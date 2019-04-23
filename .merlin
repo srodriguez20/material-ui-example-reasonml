@@ -1,0 +1,18 @@
+####{BSB GENERATED: NO EDIT
+B lib\bs
+FLG -open ReactTemplate
+FLG -ppx "C:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\reactjs_jsx_ppx_2.exe"
+FLG -ppx C:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\bsppx.exe
+S c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\ocaml
+B c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\ocaml
+FLG -nostdlib -color always
+FLG -w -30-40+6+7+27+32..39+44+45+101
+S c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\reason-react\lib\ocaml
+B c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\reason-react\lib\ocaml
+S c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\@jsiebern\bs-material-ui\lib\ocaml
+B c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\@jsiebern\bs-material-ui\lib\ocaml
+S c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\@mscharley\bs-material-ui-icons\lib\ocaml
+B c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\@mscharley\bs-material-ui-icons\lib\ocaml
+S src
+B lib\bs\src
+####BSB GENERATED: NO EDIT}

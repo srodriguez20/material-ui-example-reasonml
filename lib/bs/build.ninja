@@ -1,0 +1,48 @@
+bs_package_flags = -bs-package-map react-template
+src_root_dir = c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example
+bsc = C:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\bsc.exe
+bsdep = C:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\bsb_helper.exe
+warnings = -w -30-40+6+7+27+32..39+44+45+101
+bsc_flags = -bs-suffix -nostdlib -I "c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\ocaml" -color always
+ppx_flags = 
+bs_package_includes = -I c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\reason-react\lib\ocaml -I c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\@jsiebern\bs-material-ui\lib\ocaml -I c:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\@mscharley\bs-material-ui-icons\lib\ocaml
+bs_package_dev_includes = 
+namespace = -ns ReactTemplate
+bsb_dir_group = 0
+refmt = C:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\refmt.exe
+reason_react_jsx = -ppx "C:\Users\srodriguez\Documents\Santiago\frameworks\Reason\material-ui-example\node_modules\bs-platform\lib\reactjs_jsx_ppx_2.exe"
+refmt_flags = --print binary
+bsc_lib_includes = -I . -I src
+rule build_ast_and_module_sets_from_re
+  command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build src\Index.mlast : build_ast_and_module_sets_from_re $src_root_dir\src\Index.re
+rule build_deps
+  command = ${bsdep} ${namespace} -g ${bsb_dir_group} -MD ${in}
+  restat = 1
+  description = [34mBuilding[39m [2m${out}[22m
+build src\Index.mlast.d : build_deps src\Index.mlast
+rule build_cmj_cmi
+  command = ${bsc} ${bs_package_flags} -bs-assume-no-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
+  depfile = ${in}.d
+  restat = 1
+  description = [34mBuilding[39m [2m${out}[22m
+build src\Index-ReactTemplate.cmj |  $src_root_dir\src\Index.bs.js src\Index-ReactTemplate.cmi : build_cmj_cmi src\Index.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:src
+build src\Component1.mlast : build_ast_and_module_sets_from_re $src_root_dir\src\Component1.re
+build src\Component1.mlast.d : build_deps src\Component1.mlast
+build src\Component1-ReactTemplate.cmj |  $src_root_dir\src\Component1.bs.js src\Component1-ReactTemplate.cmi : build_cmj_cmi src\Component1.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:src
+build src\Component2.mlast : build_ast_and_module_sets_from_re $src_root_dir\src\Component2.re
+build src\Component2.mlast.d : build_deps src\Component2.mlast
+build src\Component2-ReactTemplate.cmj |  $src_root_dir\src\Component2.bs.js src\Component2-ReactTemplate.cmi : build_cmj_cmi src\Component2.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:src
+rule build_package
+  command = ${bsc} -w -49 -no-alias-deps -c ${in}
+  restat = 1
+  description = [34mBuilding[39m [2m${out}[22m
+build ReactTemplate.cmi : build_package ReactTemplate.mlmap
+build build.ninja : phony  ||  ReactTemplate.cmi src\Component2.mlast.d src\Component1.mlast.d src\Index.mlast.d
